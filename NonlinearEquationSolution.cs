@@ -12,11 +12,8 @@ public static class NonlinearEquationSolution
         {
             c = (a + b) / 2;
 
-            f = Function(c) * Function(x0);
-
-            if (f < 0) b = a;
-
-            a = c;
+            if (Function(c) * Function(a) < 0) b = c;
+            else a = c;
 
             counter++;
 
