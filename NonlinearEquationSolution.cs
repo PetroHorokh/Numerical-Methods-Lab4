@@ -31,30 +31,30 @@ public static class NonlinearEquationSolution
         Console.WriteLine($"Incoherency: {Math.Abs(x - root)}\n");
     }
 
-    public static void NewtonAlgorithm(double x0, double root, double e)
+    public static void SecantAlgorithm(double x0, double x1, double root, double e)
     {
         var counter = 0;
-        var priorX = x0;
-        var newX = x0;
+        var priorX0 = x0;
+        var priorX1 = x0;
+        var newX = x1;
 
         do
         {
-            priorX = newX;
-
-            newX = priorX - Function(priorX)/Derivative(priorX);
+            priorX0 = priorX1;
+            priorX1 = newX;
+            
+            newX = priorX1 - ((priorX1 - priorX0) * Function(priorX1)) / (Function(priorX1) - Function(priorX0));
 
             counter++;
 
             Console.WriteLine($"Iteration: {counter}");
             Console.WriteLine($"Root: {newX}\n");
 
-        } while (Math.Abs(newX - priorX) >= e);
+        } while (Math.Abs(newX - priorX1) >= e);
 
         Console.WriteLine($"Amount of iterations: {counter}");
         Console.WriteLine($"Incoherency: {Math.Abs(newX - root)}\n");
     }
 
     private static double Function(double x) => (Math.Pow(x, 3) - 10 - Math.Sqrt(x - 2));
-
-    private static double Derivative(double x) => 3 * Math.Pow(x, 2) - 1 / (2 * Math.Sqrt(x - 2));
 }
