@@ -6,11 +6,11 @@ public static class NonlinearEquationSolution
     {
         var a = x0;
         var b = x1;
-        double c, f, root;
+        double root;
         int counter = 0;
         do
         {
-            c = (a + b) / 2;
+            var c = (a + b) / 2;
 
             if (Function(c) * Function(a) < 0) b = c;
             else a = c;
@@ -47,7 +47,7 @@ public static class NonlinearEquationSolution
             Console.WriteLine($"Iteration: {counter}");
             Console.WriteLine($"Root: {newX}\n");
 
-        } while (Math.Abs(newX - priorX1) >= e);
+        } while (Math.Abs(newX - priorX1) >= e || Math.Abs(Function(newX)) >= e);
 
         Console.WriteLine($"Amount of iterations: {counter}");
         Console.WriteLine($"Incoherency: {Math.Abs(newX - root)}\n");
